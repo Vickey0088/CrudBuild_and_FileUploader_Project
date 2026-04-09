@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@{
+    ViewData["Title"] = "Upload File";
+}
+
+
+
+<div class="container align-content-center">
+    <form asp-action="Upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" class="form-control" id="inputfile" />
+        <br />
+        <button type="submit" class="btn btn-primary" id="uploadsubmit">Upload File</button>
+    </form>
+</div>
+
+<br />
+
+@if(ViewBag.FilePath != null)
+{
+    <h4>Uploaded File:</h4>
+
+    <img src="@ViewBag.FilePath" width="200" />
+    <!-- For download -->
+    <a href="@ViewBag.FilePath" target="_blank">View File</a>
+}
+
+@section Scripts{
+    <script>
+        $(document).ready(function(){
+            $("#uploadsubmit").click(function(){
+                var file = $("#inputfile")[0].files[0];
+                var formData = new FormData();
+                formData.append("file",file);
+
+                $.ajax({
+                    url:"/Batchmate/Upload",
+                    type:"POST",
+                    data:formData,
+                    contentType:false,
+                    processData:false,
+                    success:function(res)
+                    {
+                       $("#filePath").attr("src",res.filePath);
+                    }
+                });
+            });
+        });
+    </script>
+}

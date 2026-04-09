@@ -1,0 +1,72 @@
+﻿@model MarchCrudPractice.Models.Batchmates
+
+@{
+    ViewData["Title"] = "Update Batchmate";
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-warning text-dark text-center rounded-top-4">
+                    <h4 class="mb-0">Update Batchmate</h4>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form asp-action="Update">
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <!-- Hidden ID -->
+                        <input type="hidden" asp-for="Id" />
+
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label fw-semibold"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Age -->
+                        <div class="mb-3">
+                            <label asp-for="Age" class="form-label fw-semibold"></label>
+                            <input asp-for="Age" class="form-control" placeholder="Enter age" />
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>
+
+                        <!-- Course -->
+                        <div class="mb-3">
+                            <label asp-for="Course" class="form-label fw-semibold"></label>
+                            <input asp-for="Course" class="form-control" placeholder="Enter course" />
+                            <span asp-validation-for="Course" class="text-danger"></span>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="GetAll" class="btn btn-outline-secondary">
+                                ← Back
+                            </a>
+
+                            <button type="submit" class="btn btn-warning px-4">
+                                Update
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

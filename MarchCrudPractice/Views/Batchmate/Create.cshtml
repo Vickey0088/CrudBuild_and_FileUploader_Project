@@ -1,0 +1,120 @@
+﻿@model MarchCrudPractice.Models.Batchmates
+
+@{
+    ViewData["Title"] = "Create Batchmate";
+}
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-primary text-white text-center rounded-top-4">
+                    <h4 class="mb-0">Add New Batchmate</h4>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form asp-action="Create" >
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <!-- Name -->
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label fw-semibold"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Age -->
+                        <div class="mb-3">
+                            <label asp-for="Age" class="form-label fw-semibold"></label>
+                            <input asp-for="Age" class="form-control" placeholder="Enter age" />
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>
+
+                        <!-- Course -->
+                        <div class="mb-3">
+                            <label asp-for="Course" class="form-label fw-semibold"></label>
+                            <input asp-for="Course" class="form-control" placeholder="Enter course" />
+                            <span asp-validation-for="Course" class="text-danger"></span>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="d-flex justify-content-between mt-4">
+                            <a asp-action="GetAll" class="btn btn-outline-secondary">
+                                ← Back
+                            </a>
+
+                            <button type="submit" id="formsubmit" class="btn btn-success px-4">
+                                Create
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+
+        $(document).ready(function(){
+            $("#formsubmit").click(function(e){
+                e.preventDefault();
+               var data = { 
+                   name = $("#Name").val(),
+                age = $("#Age").val(),
+                 course = $("#Course").val(),
+               }
+
+                 isValid = true;
+
+                if(data.name === ""){
+                    data.isValid = false;
+                    $("#Name").addClass("is-invalid");
+                } else {
+                    $("#Name").removeClass("is-invalid");
+                }
+
+                if(data.age === "" || isNaN(data.age)){
+                    data.isValid = false;
+                    $("#Age").addClass("is-invalid");
+                } else {
+                    $("#Age").removeClass("is-invalid");
+                }
+
+                if(data.course === ""){
+                    data.isValid = false;
+                    $("#Course").addClass("is-invalid");
+                } else {
+                    $("#Course").removeClass("is-invalid");
+                }
+
+                 if (!isValid) return;
+
+                $.post("/Batchmate/Create",data,function(response){
+               if (response.isValid) {
+                    alert("Batchmate created successfully!");
+                } else {
+                    alert("Failed to create batchmate.");
+                }
+                });
+
+
+
+            });
+        });
+
+    </script>
+}
